@@ -7,6 +7,7 @@ const { checkSchema } = require('express-validator')
 const configureDB = require('./config/db')
 const userCtrl = require('./app/controllers/user-ctrl')
 const { userRegisterValidation, userLoginValidations } = require('./app/validations/user-validation')
+const authenticateUser = require('./app/middlewares/authenticateUser')
 
 const app = express()
 const port = process.env.PORT
@@ -19,7 +20,7 @@ app.use(cors())
 
 app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.register)
 app.post('/users/login', checkSchema(userLoginValidations),  userCtrl.login)
-
+app.get('/users/account', authenticateUser, userCtrl.account)
 
 
 

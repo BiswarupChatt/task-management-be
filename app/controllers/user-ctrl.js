@@ -38,16 +38,25 @@ userCtrl.login = async (req, res) => {
                     id: user._id,
                     role: user.role
                 }
-                const token = jwt.sign(tokenData, process.env.JWT_SECRET, {expiresIn: '12h'})
+                const token = jwt.sign(tokenData, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRE})
                 res.json({token: token})
             }else{
-                return res.status(404).json({errors: 'Invalid Credentials'})
+                return res.status(404).json({errors: 'Invalid credentials'})
             }
         }else{
-            return res.status(404).json({errors: 'Invalid Credentials'})
+            return res.status(404).json({errors: 'Invalid credentials'})
         }
     } catch(err){
         res.status(500).json({errors: 'Something went wrong'})
+    }
+}
+
+userCtrl.account = async(req, res)=>{
+    try{
+        const user = await User.findById(req.user.id)
+        return res.json(user)
+    }catch(err){
+        return res.status(500).json({errors: 'Something went wrong'})
     }
 }
 
