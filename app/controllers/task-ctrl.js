@@ -26,4 +26,4 @@ taskCtrl.delete = async (req, res) => {
   res.status(204).send("Task deleted");
 };
 
-module.exports = taskCtrl
+module.exports = taskCtrl;
