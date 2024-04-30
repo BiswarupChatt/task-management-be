@@ -86,8 +86,8 @@ const userRegisterValidation = {
             errorMessage: 'Role cannot be empty'
         },
         isIn: {
-            options: [[ 'TeamLead', 'Employee']],
-            errorMessage: 'Role should be HR, TeamLead or Employee'
+            options: [['TeamLead', 'Employee']],
+            errorMessage: 'Role should be TeamLead or Employee'
         }
     }
 }
@@ -126,5 +126,41 @@ const userLoginValidations = {
     }
 }
 
+const userUpdateValidations = {
+    firstName: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'First Name is required'
+        },
+        notEmpty: {
+            errorMessage: 'First Name cannot be empty'
+        },
+        trim: true
+    },
+    lastName: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Last Name is required'
+        },
+        notEmpty: {
+            errorMessage: 'Last Name cannot be empty'
+        },
+        trim: true
+    },
+    email: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Email is required'
+        },
+        notEmpty: {
+            errorMessage: 'Email cannot be empty'
+        },
+        isEmail: {
+            errorMessage: 'Email should be in a valid format'
+        },
+        trim: true,
+        normalizeEmail: true
+    }
+}
 
-module.exports = { userRegisterValidation , userLoginValidations}
+module.exports = { userRegisterValidation, userLoginValidations, userUpdateValidations }
