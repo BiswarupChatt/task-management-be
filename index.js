@@ -3,11 +3,11 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const { checkSchema } = require('express-validator')
-//const tasksRouter = require('./app/controllers/task-ctrl')
+
 
 const configureDB = require('./config/db')
 const userCtrl = require('./app/controllers/user-ctrl')
-const { userRegisterValidation, userLoginValidations, userUpdateValidations } = require('./app/validations/user-validation')
+const { userRegisterValidation, userLoginValidations } = require('./app/validations/user-validation')
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
 const taskCtrl = require('./app/controllers/task-ctrl')
@@ -27,10 +27,10 @@ app.get('/users/account', authenticateUser, userCtrl.account)
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
-app.post('/task/create', taskCtrl.create)
-app.get('/tasks', taskCtrl.getTasks)
-app.put('/tasks/:id', taskCtrl.update)
-app.delete('/tasks/:id', taskCtrl.delete)
+app.post('/task/create',taskCtrl.create)
+app.get('/tasks',taskCtrl.getTasks)
+app.put('/tasks/:id',taskCtrl.update)
+app.delete('/tasks/:id',taskCtrl.delete)
 
 
 

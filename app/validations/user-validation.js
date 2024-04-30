@@ -86,8 +86,8 @@ const userRegisterValidation = {
             errorMessage: 'Role cannot be empty'
         },
         isIn: {
-            options: [['TeamLead', 'Employee']],
-            errorMessage: 'Role should be TeamLead or Employee'
+            options: [[ 'TeamLead', 'Employee']],
+            errorMessage: 'Role should be HR, TeamLead or Employee'
         }
     }
 }
