@@ -7,13 +7,27 @@ const { checkSchema } = require('express-validator')
 
 const configureDB = require('./config/db')
 const userCtrl = require('./app/controllers/user-ctrl')
-const { userRegisterValidation, userLoginValidations } = require('./app/validations/user-validation')
+const { userRegisterValidation, userLoginValidations,userUpdateValidations } = require('./app/validations/user-validation')
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
+
+
 const taskCtrl = require('./app/controllers/task-ctrl')
+const { taskValidations } = require('./app/validations/task-validations')
+
+ const emailCtrl = require('./app/controllers/email.ctrl')
+ const {emailValidations} = require('./app/validations/email-validations')
 
 const app = express()
 const port = process.env.PORT
+
+const handleValidationErrors = (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+};
 
 configureDB()
 app.use(express.json())
@@ -27,11 +41,12 @@ app.get('/users/account', authenticateUser, userCtrl.account)
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
-app.post('/task/create',taskCtrl.create)
+app.post('/task/create',checkSchema(taskValidations),handleValidationErrors,taskCtrl.create)
 app.get('/tasks',taskCtrl.getTasks)
-app.put('/tasks/:id',taskCtrl.update)
+app.put('/tasks/:id',checkSchema(taskValidations),handleValidationErrors,taskCtrl.update)
 app.delete('/tasks/:id',taskCtrl.delete)
 
+//app.post('/send-email', checkSchema(emailValidations), handleValidationErrors,emailCtrl.send)
 
 
 
