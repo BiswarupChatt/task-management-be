@@ -27,7 +27,7 @@ app.get('/users/account', authenticateUser, userCtrl.account)
 
 app.post('/task/create',taskCtrl.create)
 app.get('/tasks',taskCtrl.getTasks)
-app.put('/tasks/update',taskCtrl.update)
+app.put('/tasks/:id',taskCtrl.update)
 app.delete('/tasks/:id',taskCtrl.delete)
 
 
