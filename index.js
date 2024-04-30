@@ -3,11 +3,12 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const { checkSchema } = require('express-validator')
-//const tasksRouter = require('./app/controllers/task-ctrl')
+
 
 const configureDB = require('./config/db')
 const userCtrl = require('./app/controllers/user-ctrl')
 const { userRegisterValidation, userLoginValidations } = require('./app/validations/user-validation')
+const {taskValidations} = require('./app/validations/task-validations')
 const authenticateUser = require('./app/middlewares/authenticateUser')
 
 const taskCtrl = require('./app/controllers/task-ctrl')
@@ -25,9 +26,9 @@ app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.regist
 app.post('/users/login', checkSchema(userLoginValidations),  userCtrl.login)
 app.get('/users/account', authenticateUser, userCtrl.account)
 
-app.post('/task/create',taskCtrl.create)
+app.post('/tasks/create',checkSchema(taskValidations),taskCtrl.create)
 app.get('/tasks',taskCtrl.getTasks)
-app.put('/tasks/:id',taskCtrl.update)
+app.put('/tasks/:id',checkSchema(taskValidations),taskCtrl.update)
 app.delete('/tasks/:id',taskCtrl.delete)
 
 

@@ -87,7 +87,7 @@ const userRegisterValidation = {
         },
         isIn: {
             options: [[ 'TeamLead', 'Employee']],
-            errorMessage: 'Role should be HR, TeamLead or Employee'
+            errorMessage: 'Role should be  TeamLead or Employee'
         }
     }
 }
