@@ -73,4 +73,4 @@ const taskValidations = {
   },
 };
 
-module.exports =  {taskValidations }
+module.exports = { taskValidations };
