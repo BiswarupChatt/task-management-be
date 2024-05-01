@@ -21,6 +21,7 @@ taskCtrl.update = async (req, res) => {
   });
   res.send(task);
 };
+
 taskCtrl.delete = async (req, res) => {
   await Task.findByIdAndRemove(req.params.id);
   res.status(204).send("Task deleted");
