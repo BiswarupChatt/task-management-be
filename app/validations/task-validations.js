@@ -71,6 +71,15 @@ const taskValidations = {
       },
     },
   },
+  assignedUserId: {
+    in: ["body"],
+    exists: {
+      errorMessage: "Assigned User Id is required",
+    },
+    notEmpty: {
+      errorMessage: "Assigned User Id cannot be empty",
+    },
+  }
 };
 
 module.exports = { taskValidations };

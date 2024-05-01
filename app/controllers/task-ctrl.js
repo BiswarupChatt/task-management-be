@@ -22,7 +22,6 @@ taskCtrl.create = async (req, res) => {
     }else{
       nodemailer.sendTaskEmail(assignedUser.email)
     }
-
     res.status(200).json(task)
   } catch (err) {
     res.status(500).json({ errors: 'Something went wrong' })
