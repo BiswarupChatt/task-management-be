@@ -16,8 +16,8 @@ const authorizeUser = require('./app/middlewares/authorizeUser')
 
 
 
-const emailCtrl = require('./app/controllers/email.ctrl')
-const { emailValidations } = require('./app/validations/email-validations')
+// const emailCtrl = require('./app/controllers/email.ctrl')
+// const { emailValidations } = require('./app/validations/email-validations')
 
 const app = express()
 const port = process.env.PORT
@@ -42,7 +42,7 @@ app.get('/users/account', authenticateUser, userCtrl.account)
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
-app.post('/task/create', authenticateUser, authorizeUser(['Employee']), checkSchema(taskValidations), taskCtrl.create)
+app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations), taskCtrl.create)
 app.get('/tasks', taskCtrl.getTasks)
 app.put('/tasks/:id', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
 app.delete('/tasks/:id', taskCtrl.delete)

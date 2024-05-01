@@ -1,6 +1,7 @@
 const {validationResult} = require('express-validator')
-const Task = require("../models/task-model");
-
+const Task = require("../models/task-model")
+const User = require("../models/user-model")
+const nodemailer = require("../utility/nodemailer")
 const taskCtrl = {};
 
 taskCtrl.create = async (req, res) => {
@@ -15,6 +16,13 @@ taskCtrl.create = async (req, res) => {
     task.userId = req.user.id
     await task.save()
     //sent task email (todo)
+    const assignedUser = await User.findById(task.assignedUserId)
+    if(!assignedUser){
+      return res.status(400).json({errors : 'Assigned user not found'})
+    }else{
+      nodemailer.sendTaskEmail(assignedUser.email)
+    }
+
     res.status(200).json(task)
   } catch (err) {
     res.status(500).json({ errors: 'Something went wrong' })

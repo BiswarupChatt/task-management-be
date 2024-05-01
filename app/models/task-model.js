@@ -8,7 +8,7 @@ const taskSchema = new Schema(
     priority: String,
     status: String,
     dueDate: Date,
-    assignedUsers: Schema.Types.ObjectId,
+    assignedUserId: Schema.Types.ObjectId,
     userId: {
       type: Schema.Types.ObjectId,
       ref: 'User'
