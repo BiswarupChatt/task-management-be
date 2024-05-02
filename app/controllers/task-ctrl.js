@@ -1,4 +1,4 @@
-const {validationResult} = require('express-validator')
+const { validationResult } = require('express-validator')
 const Task = require("../models/task-model")
 const User = require("../models/user-model")
 const nodemailer = require("../utility/nodemailer")
@@ -6,9 +6,9 @@ const taskCtrl = {};
 
 taskCtrl.create = async (req, res) => {
   const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() })
-    }
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
 
   try {
     const body = req.body
@@ -17,9 +17,9 @@ taskCtrl.create = async (req, res) => {
     await task.save()
     //sent task email (todo)
     const assignedUser = await User.findById(task.assignedUserId)
-    if(!assignedUser){
-      return res.status(400).json({errors : 'Assigned user not found'})
-    }else{
+    if (!assignedUser) {
+      return res.status(400).json({ errors: 'Assigned user not found' })
+    } else {
       nodemailer.sendTaskEmail(assignedUser.email)
     }
     res.status(200).json(task)
@@ -29,8 +29,13 @@ taskCtrl.create = async (req, res) => {
 }
 
 taskCtrl.getTasks = async (req, res) => {
-  const tasks = await Task.find();
-  res.send(tasks);
+  try {
+    const userId = req.user.id
+    const tasks = await Task.find({ assignedUserId: userId });
+    res.status(200).json(tasks)
+  }catch(err){
+    res.status(500).json({ errors: 'Something went wrong' })
+  }
 };
 
 taskCtrl.update = async (req, res) => {
