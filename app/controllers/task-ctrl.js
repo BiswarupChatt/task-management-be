@@ -27,11 +27,32 @@ taskCtrl.create = async (req, res) => {
     res.status(500).json({ errors: 'Something went wrong' })
   }
 }
+// taskCtrl.getTasks = async (req, res) => {
+//   try {
+//     //  req.user.id contains the ID of the logged-in user
+//     const tasks = await Task.find({ userId: req.user.id });
+//     res.send(tasks);
+//   } catch (error) {
+//     res.status(500).json({ message: 'Failed to retrieve tasks', error: error });
+//   }
+// };
 
-taskCtrl.getTasks = async (req, res) => {
-  const tasks = await Task.find();
-  res.send(tasks);
-};
+// taskCtrl.getTasks = async (req, res) => {
+//   try {
+//     const tasks = await Task.find({ userId: req.user.id });
+//     res.status(200).json(tasks);
+//   } catch (error) {
+//     console.error(error);  // Log the full error to your server console
+//     res.status(500).json({ message: 'Failed to retrieve tasks', error: error.message });
+//   }
+// };
+
+
+
+// taskCtrl.getTasks = async (req, res) => {
+//   const tasks = await Task.find();
+//   res.send(tasks);
+// };
 
 taskCtrl.update = async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
