@@ -65,5 +65,26 @@ Description here (todo)
 
     Authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmU1OTY4OWMyYzQ4NGZmZTY5Nzk1YiIsInJvbGUiOiJFbXBsb3llZSIsImlhdCI6MTcxNDM4OTcyNSwiZXhwIjoxNzE0NDMyOTI1fQ.Yo0V21PUE1WirlzwLfm1IWKKMg6-SQQjp5j9iRZtj_k
 
+---
+---
 
+# Task
+Description here (todo)
 
+## Create Task
+> GET 
+    localhost:3456/task/create
+
+#### Request Headers
+
+    Authorization : eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzM0MmNjM2YzNDUzNmEwMzA0MzFhNCIsInJvbGUiOiJUZWFtTGVhZCIsImlhdCI6MTcxNDYzNTQ5MCwiZXhwIjoxNzE0Njc4NjkwfQ.IFhIzJH41twzUM8GIx2khlNNtRMUCbRMbP1_jW_Y7CE
+
+#### **Body** raw (json)
+    {
+    "title": "Likitha Task 3",
+    "description": "Check all the validation file",
+    "priority": "Low",
+    "status": "Pending",
+    "dueDate": "2024-06-15",
+    "assignedUserId": "66330aabf2a0d226937d8dcf"
+}

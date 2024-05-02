@@ -45,6 +45,8 @@ app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
 app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations),taskCtrl.create)
 app.get('/tasks',taskCtrl.getTasks)
+app.post('/task/create', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.create)
+app.get('/tasks',authenticateUser, authorizeUser(["Employee"]), taskCtrl.getTasks)
 app.put('/tasks/:id', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
 app.delete('/tasks/:id', taskCtrl.delete)
 
