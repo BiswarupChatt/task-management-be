@@ -45,12 +45,12 @@ app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), u
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
 //tasks crud operations 
-app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations),taskCtrl.create)
-app.get('/tasks',authenticateUser, taskCtrl.getTasks)
+app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations), taskCtrl.create)
+app.get('/tasks', authenticateUser, taskCtrl.getTasks)
 // app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
 
 app.put('/tasks/:id', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
-app.delete('/tasks/:id', taskCtrl.delete)
+app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
 
 //app.post('/send-email', checkSchema(emailValidations), handleValidationErrors,emailCtrl.send)
 

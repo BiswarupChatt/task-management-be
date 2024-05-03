@@ -69,11 +69,6 @@ taskCtrl.getTasks = async (req, res) => {
 // };
 
 
-
-
-
-
-
 taskCtrl.update = async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -82,8 +77,28 @@ taskCtrl.update = async (req, res) => {
 };
 
 taskCtrl.delete = async (req, res) => {
-  await Task.findByIdAndRemove(req.params.id);
-  res.status(204).send("Task deleted");
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  try {
+    const taskId = req.query._id
+    const userId = req.user.id
+    const task = await Task.findById(taskId)
+
+    if (task.userId.toString() !== userId.toString()) {
+      res.status(400).json({ errors: "Unauthorized to delete task" })
+    } else {
+      const deletedTask = await Task.findByIdAndDelete(taskId)
+      res.status(200).json(deletedTask)
+    }
+
+
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: "Something went wrong" })
+  }
 };
 
 module.exports = taskCtrl;
