@@ -29,7 +29,7 @@ taskCtrl.create = async (req, res) => {
 }
 
 
-taskCtrl.getTasks = async (req, res) => {
+taskCtrl.getEmployeeTasks = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() })
@@ -38,6 +38,23 @@ taskCtrl.getTasks = async (req, res) => {
   try {
     const userId = req.user.id
     const tasks = await Task.find({ assignedUserId: userId });
+    res.status(200).json(tasks)
+  }catch(err){
+    console.log(err)
+    res.status(500).json({ errors: 'Cant not retrieve the data ' })
+  } 
+  
+};
+
+taskCtrl.getTeamLeadTasks = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
+  try {
+    const userId = req.user.id
+    const tasks = await Task.find({ UserId: userId });
     res.status(200).json(tasks)
   }catch(err){
     console.log(err)

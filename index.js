@@ -47,7 +47,8 @@ app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
 //tasks crud operations 
 app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations),taskCtrl.create)
-app.get('/tasks',authenticateUser, authorizeUser(["Employee"]), taskCtrl.getTasks)
+app.get('/tasks/employee',authenticateUser, authorizeUser(["Employee"]), taskCtrl.getEmployeeTasks)
+app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
 
 app.put('/tasks/:id', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
 app.delete('/tasks/:id', taskCtrl.delete)
