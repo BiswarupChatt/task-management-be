@@ -16,7 +16,6 @@ taskCtrl.create = async (req, res) => {
     const task = new Task(body)
     task.userId = req.user.id
     await task.save()
-    //sent task email (todo)
     const assignedUser = await User.findById(task.assignedUserId)
     if (!assignedUser) {
       return res.status(400).json({ errors: 'Assigned user not found' })
@@ -54,14 +53,26 @@ taskCtrl.create = async (req, res) => {
 //   const tasks = await Task.find();
 //   res.send(tasks);
 // };
+
 taskCtrl.getTasks = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
   try {
     const userId = req.user.id
     const tasks = await Task.find({ assignedUserId: userId });
     res.status(200).json(tasks)
+<<<<<<< HEAD
   }catch(err){
     console.log(err)
     res.status(500).json({ errors: 'Cant not retrieve the data ' })
+=======
+  } catch (err) {
+    console.log(err)
+    res.status(500).json({ errors: 'Something went wrong' })
+>>>>>>> 4ef185a27dedf1e4a8d88738f2e29767073222a0
   }
 };
 
