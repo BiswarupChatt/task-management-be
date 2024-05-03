@@ -2,7 +2,7 @@ const { validationResult } = require('express-validator')
 const Task = require("../models/task-model")
 const User = require("../models/user-model")
 const nodemailer = require("../utility/nodemailer")
-const Employee = require("../models/task-model");
+// const Employee = require("../models/task-model");
 const taskCtrl = {};
 
 taskCtrl.create = async (req, res) => {
