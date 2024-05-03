@@ -29,59 +29,44 @@ taskCtrl.create = async (req, res) => {
   }
 }
 
-//list of user assigned to particular tasks
-taskCtrl.getEmployeeTasks = async (req, res) => {
+taskCtrl.getTasks = async (req, res) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() })
   }
 
   try {
-    const userId = req.user.id
-    const tasks = await Task.find({ assignedUserId: userId });
-    res.status(200).json(tasks)
-  }catch(err){
+    if (req.user.role == 'Employee') {
+      const userId = req.user.id
+      const tasks = await Task.find({ assignedUserId: userId });
+      res.status(200).json(tasks)
+    } else {
+      const userId = req.user.id;
+      const tasks = await Task.find({ userId: userId }); // userId is case sensitive 
+      res.status(200).json(tasks);
+    }
+  } catch (err) {
     console.log(err)
     res.status(500).json({ errors: 'Cant not retrieve the data ' })
-  } 
-  
+  }
+
 };
 
-
-
 // taskCtrl.getTeamLeadTasks = async (req, res) => {
-//   const errors = validationResult(req)
+//   const errors = validationResult(req);
 //   if (!errors.isEmpty()) {
-//     return res.status(400).json({ errors: errors.array() })
+//     return res.status(400).json({ errors: errors.array() });
 //   }
 
 //   try {
-//     const userId = req.user.id
-//     const tasks = await Task.find({ UserId: userId });
-//     res.status(200).json(tasks)
-//   }catch(err){
-//     console.log(err)
-//     res.status(500).json({ errors: 'Cant not retrieve the data ' })
-//   } 
-  
+//     const userId = req.user.id;
+//     const tasks = await Task.find({ userId: userId }); // userId is case sensitive 
+//     res.status(200).json(tasks);
+//   } catch (err) {
+//     console.error('Error retrieving tasks:', err);
+//     res.status(500).json({ errors: 'Cannot retrieve the data' });
+//   }
 // };
-
-//list of tasks created by that particular teamlead
-taskCtrl.getTeamLeadTasks = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-        const userId = req.user.id; 
-        const tasks = await Task.find({ userId: userId }); // userId is case sensitive 
-        res.status(200).json(tasks);
-    } catch (err) {
-        console.error('Error retrieving tasks:', err);
-        res.status(500).json({ errors: 'Cannot retrieve the data' });
-    }
-};
 
 
 

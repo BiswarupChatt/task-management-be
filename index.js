@@ -39,7 +39,6 @@ app.use(cors())
 //user crud operations
 app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.register)
 app.post('/users/login', checkSchema(userLoginValidations), userCtrl.login)
-
 app.get('/users/account', authenticateUser, userCtrl.account)
 
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
@@ -47,8 +46,8 @@ app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
 //tasks crud operations 
 app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations),taskCtrl.create)
-app.get('/tasks/employee',authenticateUser, authorizeUser(["Employee"]), taskCtrl.getEmployeeTasks)
-app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
+app.get('/tasks',authenticateUser, taskCtrl.getTasks)
+// app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
 
 app.put('/tasks/:id', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
 app.delete('/tasks/:id', taskCtrl.delete)
