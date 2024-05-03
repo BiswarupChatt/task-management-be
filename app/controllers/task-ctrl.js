@@ -52,12 +52,19 @@ taskCtrl.create = async (req, res) => {
 //   const tasks = await Task.find();
 //   res.send(tasks);
 // };
+
 taskCtrl.getTasks = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() })
+  }
+
   try {
     const userId = req.user.id
     const tasks = await Task.find({ assignedUserId: userId });
     res.status(200).json(tasks)
   } catch (err) {
+    console.log(err)
     res.status(500).json({ errors: 'Something went wrong' })
   }
 };
