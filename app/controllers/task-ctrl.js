@@ -2,6 +2,7 @@ const { validationResult } = require('express-validator')
 const Task = require("../models/task-model")
 const User = require("../models/user-model")
 const nodemailer = require("../utility/nodemailer")
+const Employee = require("../models/task-model");
 const taskCtrl = {};
 
 taskCtrl.create = async (req, res) => {
@@ -59,9 +60,28 @@ taskCtrl.getTasks = async (req, res) => {
     const tasks = await Task.find({ assignedUserId: userId });
     res.status(200).json(tasks)
   }catch(err){
-    res.status(500).json({ errors: 'Something went wrong' })
+    console.log(err)
+    res.status(500).json({ errors: 'Cant not retrieve the data ' })
   }
 };
+
+// controllers/taskCtrl.js
+
+
+// const taskCtrl1 = {
+//   getTasks: async (req, res) => {
+//     try {
+//       // Assuming that only Employee role should fetch all employees
+//       const employees = await Employee.find();
+//       res.json(employees);
+//     } catch (error) {
+//       res.status(500).json({ message: 'Failed to retrieve employees', error: error.toString() });
+//     }
+//   }
+// };
+
+// module.exports = taskCtrl1;
+
 
 taskCtrl.update = async (req, res) => {
   const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
