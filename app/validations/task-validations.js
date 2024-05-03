@@ -82,4 +82,99 @@ const taskValidations = {
   }
 };
 
-module.exports = { taskValidations };
+
+
+
+const taskUpdateValidations = {
+    title: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Title is required'
+        },
+        notEmpty: {
+            errorMessage: 'Title cannot be empty'
+        },
+        trim: true,
+        isLength: {
+            options: { min: 1, max: 100 },
+            errorMessage: 'Title should be between 1 and 100 characters long'
+        }
+    },
+    description: {
+        in: ['body'],
+        optional: true,
+        isLength: {
+            options: { max: 500 },
+            errorMessage: 'Description cannot be more than 500 characters long'
+        },
+        trim: true
+    },
+    priority: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Priority is required'
+        },
+        notEmpty: {
+            errorMessage: 'Priority cannot be empty'
+        },
+        isIn: {
+            options: [['Low', 'Medium', 'High']],
+            errorMessage: 'Priority must be one of: Low, Medium, High'
+        }
+    },
+    status: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Status is required'
+        },
+        notEmpty: {
+            errorMessage: 'Status cannot be empty'
+        },
+        isIn: {
+            options: [['Pending', 'In Progress', 'Completed']],
+            errorMessage: 'Status must be one of: Pending, In Progress, Completed'
+        }
+    },
+    dueDate: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Due Date is required'
+        },
+        notEmpty: {
+            errorMessage: 'Due Date cannot be empty'
+        },
+        isISO8601: {
+            errorMessage: 'Due Date must be a valid date'
+        },
+        toDate: true  // Converts to Date object after validation
+    },
+    assignedUserId: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'Assigned User ID is required'
+        },
+        notEmpty: {
+            errorMessage: 'Assigned User ID cannot be empty'
+        },
+        isMongoId: {
+            errorMessage: 'Assigned User ID must be a valid MongoDB ObjectId'
+        }
+    },
+    userId: {
+        in: ['body'],
+        exists: {
+            errorMessage: 'User ID is required'
+        },
+        notEmpty: {
+            errorMessage: 'User ID cannot be empty'
+        },
+        isMongoId: {
+            errorMessage: 'User ID must be a valid MongoDB ObjectId'
+        }
+    }
+};
+
+
+
+
+module.exports = { taskValidations,taskUpdateValidations };
