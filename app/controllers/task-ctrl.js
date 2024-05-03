@@ -27,32 +27,7 @@ taskCtrl.create = async (req, res) => {
     res.status(500).json({ errors: 'Something went wrong' })
   }
 }
-// taskCtrl.getTasks = async (req, res) => {
-//   try {
-//     //  req.user.id contains the ID of the logged-in user
-//     const tasks = await Task.find({ userId: req.user.id });
-//     res.send(tasks);
-//   } catch (error) {
-//     res.status(500).json({ message: 'Failed to retrieve tasks', error: error });
-//   }
-// };
 
-// taskCtrl.getTasks = async (req, res) => {
-//   try {
-//     const tasks = await Task.find({ userId: req.user.id });
-//     res.status(200).json(tasks);
-//   } catch (error) {
-//     console.error(error);  // Log the full error to your server console
-//     res.status(500).json({ message: 'Failed to retrieve tasks', error: error.message });
-//   }
-// };
-
-
-
-// taskCtrl.getTasks = async (req, res) => {
-//   const tasks = await Task.find();
-//   res.send(tasks);
-// };
 
 taskCtrl.getTasks = async (req, res) => {
   const errors = validationResult(req)
@@ -64,34 +39,14 @@ taskCtrl.getTasks = async (req, res) => {
     const userId = req.user.id
     const tasks = await Task.find({ assignedUserId: userId });
     res.status(200).json(tasks)
-<<<<<<< HEAD
   }catch(err){
     console.log(err)
     res.status(500).json({ errors: 'Cant not retrieve the data ' })
-=======
-  } catch (err) {
-    console.log(err)
-    res.status(500).json({ errors: 'Something went wrong' })
->>>>>>> 4ef185a27dedf1e4a8d88738f2e29767073222a0
-  }
+  } 
+  
 };
 
-// controllers/taskCtrl.js
 
-
-// const taskCtrl1 = {
-//   getTasks: async (req, res) => {
-//     try {
-//       // Assuming that only Employee role should fetch all employees
-//       const employees = await Employee.find();
-//       res.json(employees);
-//     } catch (error) {
-//       res.status(500).json({ message: 'Failed to retrieve employees', error: error.toString() });
-//     }
-//   }
-// };
-
-// module.exports = taskCtrl1;
 
 
 taskCtrl.update = async (req, res) => {

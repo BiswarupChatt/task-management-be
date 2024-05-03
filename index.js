@@ -47,12 +47,6 @@ app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
 //tasks crud operations 
 app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSchema(taskValidations),taskCtrl.create)
-<<<<<<< HEAD
-
-
-app.get('/tasks',taskCtrl.getTasks)
-=======
->>>>>>> 4ef185a27dedf1e4a8d88738f2e29767073222a0
 app.get('/tasks',authenticateUser, authorizeUser(["Employee"]), taskCtrl.getTasks)
 
 app.put('/tasks/:id', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
