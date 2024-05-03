@@ -15,7 +15,6 @@ taskCtrl.create = async (req, res) => {
     const task = new Task(body)
     task.userId = req.user.id
     await task.save()
-    //sent task email (todo)
     const assignedUser = await User.findById(task.assignedUserId)
     if (!assignedUser) {
       return res.status(400).json({ errors: 'Assigned user not found' })
@@ -33,7 +32,7 @@ taskCtrl.getTasks = async (req, res) => {
     const userId = req.user.id
     const tasks = await Task.find({ assignedUserId: userId });
     res.status(200).json(tasks)
-  }catch(err){
+  } catch (err) {
     res.status(500).json({ errors: 'Something went wrong' })
   }
 };
