@@ -86,6 +86,21 @@ const taskValidations = {
   }
 };
 
+const taskStatusValidation ={
+  status: {
+    in: ["body"],
+    exists: {
+      errorMessage: "Status is required",
+    },
+    notEmpty: {
+      errorMessage: "Status cannot be empty",
+    },
+    isIn: {
+      options: [["Pending", "In Progress", "Completed"]],
+      errorMessage: "Status must be Pending, In Progress, or Completed",
+    },
+  },
+}
 
 
-  module.exports = { taskValidations}
+  module.exports = { taskValidations, taskStatusValidation}

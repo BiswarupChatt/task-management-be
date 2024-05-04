@@ -40,10 +40,12 @@ taskCtrl.getTasks = async (req, res) => {
       const userId = req.user.id
       const tasks = await Task.find({ assignedUserId: userId });
       res.status(200).json(tasks)
-    } else {
+    } else if (req.user.role == 'TeamLead') {
       const userId = req.user.id;
       const tasks = await Task.find({ userId: userId }); // userId is case sensitive 
       res.status(200).json(tasks);
+    } else {
+      res.status(400).json({ errors: "User not authorize to get task" })
     }
   } catch (err) {
     console.log(err)
@@ -80,35 +82,75 @@ taskCtrl.getTasks = async (req, res) => {
 // }
 
 
+// taskCtrl.update = async (req, res) => {
+//   handleValidationErrors(req, res)
+
+//   try {
+//     const taskId = req.query._id
+//     const userId = req.user.id
+//     const body = req.body
+//     const task = await Task.findById(taskId)
+
+//     if (req.user.role == "TeamLead") {
+//       if (task.userId.toString() == userId.toString()) {
+//         const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true })
+//         res.status(200).json(updatedTask);
+//       } else {
+//         res.status(403).json({ errors: "You are not authorized to update this task" })
+//       }
+//     }
+//     else if (req.user.role == "Employee") {
+//       if (task.assignedUserId.toString() == userId.toString()) {
+//         const updatedTask = await Task.findByIdAndUpdate(taskId, { status: body.status }, { new: true })
+//         res.status(200).json(updatedTask);
+//       } else {
+//         res.status(403).json({ errors: "You are not authorized to update this task" })
+//       }
+//     }
+//     else {
+//       res.status(400).json({ errors: "Invalid User Role" })
+//     }
+
+//   } catch (err) {
+//     console.error("Error updating task:", err);
+//     res.status(500).json({ message: 'Unable to update task', errors: err.message })
+//   }
+// }
+
+
 taskCtrl.update = async (req, res) => {
   handleValidationErrors(req, res)
-
   try {
     const taskId = req.query._id
     const userId = req.user.id
     const body = req.body
     const task = await Task.findById(taskId)
 
-    if (req.user.role == "TeamLead") {
-      if (task.userId.toString() == userId.toString()) {
-        const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true })
-        res.status(200).json(updatedTask);
-      } else {
-        res.status(403).json({ errors: "You are not authorized to update this task" })
-      }
+    if (task.userId.toString() == userId.toString()) {
+      const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true })
+      res.status(200).json(updatedTask);
+    } else {
+      res.status(403).json({ errors: "You are not authorized to update this task" })
     }
-    else if (req.user.role == "Employee") {
-      if (task.assignedUserId.toString() == userId.toString()) {
-        const updatedTask = await Task.findByIdAndUpdate(taskId, { status: body.status }, { new: true })
-        res.status(200).json(updatedTask);
-      } else {
-        res.status(403).json({ errors: "You are not authorized to update this task" })
-      }
-    }
-    else {
-      res.status(400).json({ errors: "Invalid User Role" })
-    }
+  } catch (err) {
+    res.status(500).json({ errors: 'Something went wrong' })
+  }
+}
 
+taskCtrl.statusUpdate = async (req, res) => {
+  handleValidationErrors(req, res)
+  try {
+    const taskId = req.query._id
+    const userId = req.user.id
+    const body = req.body
+    const task = await Task.findById(taskId)
+
+    if (task.assignedUserId.toString() == userId.toString()) {
+      const updatedTask = await Task.findByIdAndUpdate(taskId, { status: body.status }, { new: true })
+      res.status(200).json(updatedTask);
+    } else {
+      res.status(403).json({ errors: "You are not authorized to update this task" })
+    }
   } catch (err) {
     console.error("Error updating task:", err);
     res.status(500).json({ message: 'Unable to update task', errors: err.message })
@@ -116,13 +158,8 @@ taskCtrl.update = async (req, res) => {
 }
 
 
-
-
 taskCtrl.delete = async (req, res) => {
-  const errors = validationResult(req, res)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() })
-  }
+  handleValidationErrors(req, res)
 
   try {
     const taskId = req.query._id
@@ -135,8 +172,6 @@ taskCtrl.delete = async (req, res) => {
       const deletedTask = await Task.findByIdAndDelete(taskId)
       res.status(200).json(deletedTask)
     }
-
-
   } catch (err) {
     console.log(err)
     res.status(500).json({ errors: "Something went wrong" })
