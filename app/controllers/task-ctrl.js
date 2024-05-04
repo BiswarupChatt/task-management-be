@@ -72,20 +72,6 @@ taskCtrl.getTasks = async (req, res) => {
 taskCtrl.update = async (req, res) => {
   handleValidationErrors()
 
-  try {
-    const taskId = req.params.taskId; // The ID of the task to update
-    const userId = req.user.id; // ID of the logged-in user
-    const body = req.body; // Data for updating the task
-
-    // Find the task based on taskId to check the assigned user or role before updating
-    const task = await Task.findById(taskId);
-    if (!task) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-    if (!mongoose.Types.ObjectId.isValid(taskId)) {
-      return res.status(400).json({ message: "Invalid task ID format" });
-    }
-
     try {
         const taskId = req.query._id; // The ID of the task to update
         const userId = req.user.id; // ID of the logged-in user
@@ -107,11 +93,8 @@ taskCtrl.update = async (req, res) => {
         console.error("Error updating task:", err);
         res.status(500).json({ message: 'Unable to update task', errors: err.message });
     }
-  } catch (err) {
-    console.error("Error updating task:", err);
-    res.status(500).json({ message: 'Unable to update task', errors: err.message });
-  }
-};
+  } 
+
 
 
 
