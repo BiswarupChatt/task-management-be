@@ -41,6 +41,7 @@ app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSch
 app.get('/tasks', authenticateUser, taskCtrl.getTasks)
 // app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
 
+// app.put('/tasks/update', authenticateUser, taskCtrl.update)
 app.put('/tasks/update', authenticateUser, checkSchema(taskValidations), taskCtrl.update)
 app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
 
