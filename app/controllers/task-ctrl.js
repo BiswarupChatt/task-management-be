@@ -52,22 +52,6 @@ taskCtrl.getTasks = async (req, res) => {
 
 };
 
-// taskCtrl.getTeamLeadTasks = async (req, res) => {
-//   const errors = validationResult(req);
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ errors: errors.array() });
-//   }
-
-//   try {
-//     const userId = req.user.id;
-//     const tasks = await Task.find({ userId: userId }); // userId is case sensitive 
-//     res.status(200).json(tasks);
-//   } catch (err) {
-//     console.error('Error retrieving tasks:', err);
-//     res.status(500).json({ errors: 'Cannot retrieve the data' });
-//   }
-// };
-
 
 taskCtrl.update = async (req, res) => {
   handleValidationErrors(req, res)
@@ -81,7 +65,7 @@ taskCtrl.update = async (req, res) => {
     const task = await Task.findById(taskId);
 
     // Check if the logged-in user is the task's assigned user or is a team lead
-    if (task.assignedUserId.equals(userId) || req.user.role === 'TeamLead') {
+    if (task.userId == userId) {
       // Authorized to update the task
       const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true });
       res.status(200).json(updatedTask);
