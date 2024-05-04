@@ -1,12 +1,20 @@
 const mongoose = require('mongoose')
-const {Schema, model} = mongoose
+const { Schema, model } = mongoose
 
 const commentSchema = new Schema({
     content: { type: String, required: true },
-    task: { type: Schema.Types.ObjectId, ref: 'Task', required: true },
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    id: {
+        taskId: {
+            type: Schema.Types.ObjectId,
+            ref: 'Task',
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+        },
+    },
     postedAt: { type: Date, default: Date.now }
-},{timestamps:true}) // timestamps true to know when was the comment posted 
+}, { timestamps: true }) // timestamps true to know when was the comment posted 
 
 const Comment = model('Comment', commentSchema)
 
