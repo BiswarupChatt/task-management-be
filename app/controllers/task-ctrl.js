@@ -82,13 +82,7 @@ taskCtrl.update = async (req, res) => {
 
         // Find the task based on taskId to check the assigned user or role before updating
         const task = await Task.findById(taskId);
-      //   if (!task) {
-      //       return res.status(404).json({ message: "Task not found" });
-      //   }
-      // //   if (!ObjectId.isValid(taskId)) {
-      // //     return res.status(400).json({ message: "Invalid task ID format" });
-      // // }
-      
+    
         // Check if the logged-in user is the task's assigned user or is a team lead
         if (task.assignedUserId.equals(userId) || req.user.role === 'TeamLead') {
             // Authorized to update the task
