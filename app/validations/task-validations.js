@@ -10,15 +10,19 @@ const taskValidations = {
       errorMessage: "Title cannot be empty",
     },
     trim: true,
-    custom: {
-      options: async (value) => {
-        const existingTask = await Task.findOne({ title: value });
-        if (existingTask) {
-          throw new Error("Title must be unique");
-        }
-        return true;
-      },
-    },
+    isLength: {
+      options: { min: 1, max: 100 },
+      errorMessage: 'Title should be between 1 and 100 characters long'
+    }
+    // custom: {
+    //   options: async (value) => {
+    //     const existingTask = await Task.findOne({ title: value });
+    //     if (existingTask) {
+    //       throw new Error("Title must be unique");
+    //     }
+    //     return true;
+    //   },
+    // },
   },  
   description: {
     in: ["body"],
@@ -29,6 +33,10 @@ const taskValidations = {
       errorMessage: "Description cannot be empty",
     },
     trim: true,
+    isLength: {
+      options: { min: 1, max: 600 },
+      errorMessage: 'Title should be between 1 and 100 characters long'
+    }
   },
   priority: {
     in: ["body"],
@@ -143,10 +151,10 @@ const taskUpdateValidations = {
         notEmpty: {
             errorMessage: 'Due Date cannot be empty'
         },
-        isISO8601: {
-            errorMessage: 'Due Date must be a valid date'
-        },
-        toDate: true  // Converts to Date object after validation
+        // isISO8601: {
+        //     errorMessage: 'Due Date must be a valid date'
+        // },
+        // toDate: true  // Converts to Date object after validation
     },
     assignedUserId: {
         in: ['body'],
@@ -156,9 +164,9 @@ const taskUpdateValidations = {
         notEmpty: {
             errorMessage: 'Assigned User ID cannot be empty'
         },
-        isMongoId: {
-            errorMessage: 'Assigned User ID must be a valid MongoDB ObjectId'
-        }
+        // isMongoId: {
+        //     errorMessage: 'Assigned User ID must be a valid MongoDB ObjectId'
+        // }
     },
     userId: {
         in: ['body'],
@@ -168,9 +176,9 @@ const taskUpdateValidations = {
         notEmpty: {
             errorMessage: 'User ID cannot be empty'
         },
-        isMongoId: {
-            errorMessage: 'User ID must be a valid MongoDB ObjectId'
-        }
+        // isMongoId: {
+        //     errorMessage: 'User ID must be a valid MongoDB ObjectId'
+        // }
     }
 };
 

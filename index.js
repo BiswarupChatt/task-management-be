@@ -49,7 +49,7 @@ app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSch
 app.get('/tasks', authenticateUser, taskCtrl.getTasks)
 // app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
 
-app.put('/tasks/:taskId', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
+app.put('/tasks/:taskId', checkSchema(taskUpdateValidations), taskCtrl.update)
 app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
 
 //app.post('/send-email', checkSchema(emailValidations), handleValidationErrors,emailCtrl.send)
