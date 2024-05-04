@@ -82,7 +82,7 @@ userCtrl.delete = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.user.id)
         return res.json(user)
-    }catch(err){
+    } catch (err) {
         res.status(500).json({ errors: 'Something went wrong' })
     }
 }

@@ -86,7 +86,7 @@ const taskValidations = {
   }
 };
 
-const taskStatusValidation ={
+const taskStatusValidation = {
   status: {
     in: ["body"],
     exists: {
@@ -103,4 +103,4 @@ const taskStatusValidation ={
 }
 
 
-  module.exports = { taskValidations, taskStatusValidation}
+module.exports = { taskValidations, taskStatusValidation }

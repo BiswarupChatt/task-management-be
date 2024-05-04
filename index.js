@@ -40,7 +40,7 @@ app.delete('/users/delete', authenticateUser, userCtrl.delete)
 app.post('/task/create', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.create)
 app.get('/tasks', authenticateUser, taskCtrl.getTasks)
 app.put('/tasks/statusUpdate', authenticateUser, authorizeUser(["Employee"]), checkSchema(taskStatusValidation), taskCtrl.statusUpdate)
-app.put('/tasks/update', authenticateUser,authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.update)
+app.put('/tasks/update', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.update)
 app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
 
 
