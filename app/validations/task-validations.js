@@ -143,9 +143,9 @@ const taskUpdateValidations = {
         notEmpty: {
             errorMessage: 'Due Date cannot be empty'
         },
-        isISO8601: {
-            errorMessage: 'Due Date must be a valid date'
-        },
+        // isISO8601: {
+        //     errorMessage: 'Due Date must be a valid date'
+        // },
         toDate: true  // Converts to Date object after validation
     },
     assignedUserId: {

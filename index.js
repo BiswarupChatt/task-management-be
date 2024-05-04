@@ -23,14 +23,6 @@ const authorizeUser = require('./app/middlewares/authorizeUser')
 const app = express()
 const port = process.env.PORT
 
-const handleValidationErrors = (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-    next();
-};
-
 configureDB()
 app.use(express.json())
 app.use(morgan('common'))
@@ -49,7 +41,7 @@ app.post('/task/create', authenticateUser, authorizeUser(['TeamLead']), checkSch
 app.get('/tasks', authenticateUser, taskCtrl.getTasks)
 // app.get('/tasks/teamlead',authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.getTeamLeadTasks)
 
-app.put('/tasks/:taskId', checkSchema(taskValidations), handleValidationErrors, taskCtrl.update)
+app.put('/tasks/:taskId', checkSchema(taskUpdateValidations), taskCtrl.update)
 app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
 
 //app.post('/send-email', checkSchema(emailValidations), handleValidationErrors,emailCtrl.send)
