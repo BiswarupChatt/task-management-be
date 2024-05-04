@@ -86,14 +86,26 @@ taskCtrl.update = async (req, res) => {
       return res.status(400).json({ message: "Invalid task ID format" });
     }
 
-    // Check if the logged-in user is the task's assigned user or is a team lead
-    if (task.assignedUserId.equals(userId) || req.user.role === 'TeamLead') {
-      // Authorized to update the task
-      const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true });
-      res.status(200).json(updatedTask);
-    } else {
-      // Not authorized to update the task
-      return res.status(403).json({ message: "You are not authorized to update this task" });
+    try {
+        const taskId = req.query._id; // The ID of the task to update
+        const userId = req.user.id; // ID of the logged-in user
+        const body = req.body; // Data for updating the task
+
+        // Find the task based on taskId to check the assigned user or role before updating
+        const task = await Task.findById(taskId);
+    
+        // Check if the logged-in user is the task's assigned user or is a team lead
+        if (task.assignedUserId.equals(userId) || req.user.role === 'TeamLead') {
+            // Authorized to update the task
+            const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true });
+            res.status(200).json(updatedTask);
+        } else {
+            // Not authorized to update the task
+            return res.status(403).json({ message: "You are not authorized to update this task" });
+        }
+    } catch (err) {
+        console.error("Error updating task:", err);
+        res.status(500).json({ message: 'Unable to update task', errors: err.message });
     }
   } catch (err) {
     console.error("Error updating task:", err);
