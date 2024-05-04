@@ -65,7 +65,7 @@ taskCtrl.update = async (req, res) => {
     const task = await Task.findById(taskId);
 
     // Check if the logged-in user is the task's assigned user or is a team lead
-    if (task.userId == userId) {
+    if (task.userId.toString() == userId.toString()) {
       // Authorized to update the task
       const updatedTask = await Task.findByIdAndUpdate(taskId, body, { new: true });
       res.status(200).json(updatedTask);
