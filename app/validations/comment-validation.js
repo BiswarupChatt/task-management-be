@@ -16,21 +16,21 @@ const commentValidation = {
     id: {
         taskId: {
             exists: {
-                errorMessage:"Task id is is required"
+                errorMessage: "Task id is is required"
             },
-            notEmpty:{
+            notEmpty: {
                 errorMessage: "Task id cannot be empty"
             }
         },
         userId: {
             exists: {
-                errorMessage:"User id is is required"
+                errorMessage: "User id is is required"
             },
-            notEmpty:{
+            notEmpty: {
                 errorMessage: "User id cannot be empty"
             }
         },
     }
 }
 
-module.exports ={commentValidation}
+module.exports = { commentValidation }

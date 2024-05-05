@@ -11,7 +11,7 @@ const taskCtrl = require('./app/controllers/task-ctrl')
 
 const { userRegisterValidation, userLoginValidations, userUpdateValidations } = require('./app/validations/user-validation')
 const { taskValidations, taskStatusValidation } = require('./app/validations/task-validations')
-const {commentValidation} = require('./app/validations/comment-validation')
+const { commentValidation } = require('./app/validations/comment-validation')
 
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
