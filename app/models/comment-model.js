@@ -3,7 +3,7 @@ const { Schema, model } = mongoose
 
 const commentSchema = new Schema({
     content: { type: String, required: true },
-    id: {
+    identifier: {
         taskId: {
             type: Schema.Types.ObjectId,
             ref: 'Task',

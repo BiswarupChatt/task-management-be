@@ -10,9 +10,12 @@ const userCtrl = require('./app/controllers/user-ctrl')
 const taskCtrl = require('./app/controllers/task-ctrl')
 
 const { userRegisterValidation, userLoginValidations, userUpdateValidations } = require('./app/validations/user-validation')
-const { taskValidations, taskUpdateValidations, taskStatusValidation } = require('./app/validations/task-validations')
+const { taskValidations, taskStatusValidation } = require('./app/validations/task-validations')
+const {commentValidation} = require('./app/validations/comment-validation')
+
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
+const commentCtrl = require('./app/controllers/comment-ctrl')
 
 
 
@@ -42,6 +45,10 @@ app.get('/tasks', authenticateUser, taskCtrl.getTasks)
 app.put('/tasks/statusUpdate', authenticateUser, authorizeUser(["Employee"]), checkSchema(taskStatusValidation), taskCtrl.statusUpdate)
 app.put('/tasks/update', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.update)
 app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
+
+
+//comment crud operation
+app.post('/comment/create', authenticateUser, checkSchema(commentValidation), commentCtrl.create)
 
 
 
