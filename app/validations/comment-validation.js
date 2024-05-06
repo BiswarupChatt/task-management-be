@@ -13,24 +13,23 @@ const commentValidation = {
         },
         trim: true
     },
-    id: {
-        taskId: {
-            exists: {
-                errorMessage: "Task Id is  required"
-            },
-            notEmpty: {
-                errorMessage: "Task Id cannot be empty"
-            }
+    'identifier.taskId': {
+        exists: {
+            errorMessage: "Task Id is  required"
         },
-        userId: {
-            exists: {
-                errorMessage: "User Id is  required"
-            },
-            notEmpty: {
-                errorMessage: "User Id cannot be empty"
-            }
+        notEmpty: {
+            errorMessage: "Task Id cannot be empty"
+        }
+    },
+    'identifier.userId': {
+        exists: {
+            errorMessage: "User Id is  required"
         },
-    }
+        notEmpty: {
+            errorMessage: "User Id cannot be empty"
+        }
+    },
+
 }
 
 module.exports = { commentValidation }
