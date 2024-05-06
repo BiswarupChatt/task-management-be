@@ -8,6 +8,7 @@ commentCtrl.create = async (req, res) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() })
     }
+    
     try {
         const body = req.body
         const comment = new Comment(body)
@@ -48,7 +49,7 @@ commentCtrl.edit = async (req, res) => {
             const comment = await Comment.findByIdAndUpdate(commentId, body, { new: true })
             res.status(200).json(comment)
         } else {
-            res.status(500).json({ errors: "Something went wrong" })
+            res.status(500).json({ errors: "Unauthorized to edit comment" })
         }
     } catch (err) {
         res.status(500).json({ errors: 'Something went wrong' })
@@ -66,6 +67,8 @@ commentCtrl.delete = async (req, res) => {
         if (comment.identifier.userId.toString() == req.user.id.toString()) {
             const comment = await Comment.findByIdAndDelete(commentId)
             res.status(200).json(comment)
+        } else {
+            res.status(500).json({ errors: "Unauthorized to edit comment" })
         }
     } catch (err) {
         res.status(500).json({ errors: 'Something went wrong' })

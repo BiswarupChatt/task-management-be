@@ -41,7 +41,6 @@ app.use(cors())
 app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.register)
 app.post('/users/login', checkSchema(userLoginValidations), userCtrl.login)
 app.get('/users/account', authenticateUser, userCtrl.account)
-
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
