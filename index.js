@@ -15,6 +15,7 @@ const { commentValidation } = require('./app/validations/comment-validation')
 
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
+
 const commentCtrl = require('./app/controllers/comment-ctrl')
 
 

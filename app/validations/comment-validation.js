@@ -16,18 +16,18 @@ const commentValidation = {
     id: {
         taskId: {
             exists: {
-                errorMessage: "Task id is is required"
+                errorMessage: "Task Id is  required"
             },
             notEmpty: {
-                errorMessage: "Task id cannot be empty"
+                errorMessage: "Task Id cannot be empty"
             }
         },
         userId: {
             exists: {
-                errorMessage: "User id is is required"
+                errorMessage: "User Id is  required"
             },
             notEmpty: {
-                errorMessage: "User id cannot be empty"
+                errorMessage: "User Id cannot be empty"
             }
         },
     }
