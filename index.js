@@ -21,6 +21,8 @@ const authorizeUser = require('./app/middlewares/authorizeUser')
 
 const commentCtrl = require('./app/controllers/comment-ctrl')
 
+const timeCtrl = require('./app/controllers/timeLog-ctrl')
+
 
 
 
@@ -58,7 +60,7 @@ app.put("/comment/edit", authenticateUser, checkSchema(commentEditValidation), c
 app.delete("/comment/delete", authenticateUser, commentCtrl.delete)
 
 //timeLog crud operations
-// app.post('/timeLog/create',checkSchema(timeLogValidation),timeCtrl.addTimeLog)
+app.post('/timeLog/create',authenticateUser,checkSchema(timeLogValidation),timeCtrl.addTimeLog)
 
 
 
