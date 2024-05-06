@@ -57,7 +57,7 @@ app.put("/comment/edit", authenticateUser, checkSchema(commentEditValidation), c
 app.delete("/comment/delete", authenticateUser, commentCtrl.delete)
 
 //timeLog crud operations
-app.post('/timeLog/create',checkSchema(timeLogValidation),timeCtrl.addTimeLog)
+// app.post('/timeLog/create',checkSchema(timeLogValidation),timeCtrl.addTimeLog)
 
 
 
