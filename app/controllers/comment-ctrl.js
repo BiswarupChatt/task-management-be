@@ -25,5 +25,13 @@ commentCtrl.create = async (req, res) => {
     }
 }
 
+commentCtrl.get = async (req, res) => {
+    handleValidationErrors(req, res)
+    const taskId = req.query.id
+    const comment = await Comment.findOne({"identifier.taskId" : taskId})
+    res.send(comment)
+    // console.log(comment)
+}
+
 
 module.exports = commentCtrl
