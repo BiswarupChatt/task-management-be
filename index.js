@@ -11,7 +11,10 @@ const taskCtrl = require('./app/controllers/task-ctrl')
 
 const { userRegisterValidation, userLoginValidations, userUpdateValidations } = require('./app/validations/user-validation')
 const { taskValidations, taskStatusValidation } = require('./app/validations/task-validations')
+
 const { commentValidation } = require('./app/validations/comment-validation')
+
+const {timeLogValidation} = require('./app/validations/timeLog-validations')
 
 const authenticateUser = require('./app/middlewares/authenticateUser')
 const authorizeUser = require('./app/middlewares/authorizeUser')
@@ -50,7 +53,9 @@ app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskC
 
 //comment crud operation
 app.post('/comment/create', authenticateUser, checkSchema(commentValidation), commentCtrl.create)
-app.get('/comment/get' , authenticateUser, commentCtrl.get)
+
+//timeLog crud operations
+app.post('/timeLog/create',checkSchema(timeLogValidation),timeCtrl.addTimeLog)
 
 
 
