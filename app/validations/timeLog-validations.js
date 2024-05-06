@@ -1,6 +1,6 @@
 const yup = require('yup');
 
-const validateTimeLogSchema = yup.object({
+const timeLogValidation = yup.object({
     taskId: yup
         .string()
         .required('Task ID is required.'),
@@ -12,4 +12,4 @@ const validateTimeLogSchema = yup.object({
         .integer('Time spent must be an integer.')
 });
 
-module.exports = validateTimeLogSchema;
+module.exports = timeLogValidation;
