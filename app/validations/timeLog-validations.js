@@ -4,7 +4,7 @@ const timeLogValidation = yup.object({
     taskId: yup
         .string()
         .required('Task ID is required.'),
-    
+
     timeSpent: yup
         .number()
         .required('Time spent is required.')

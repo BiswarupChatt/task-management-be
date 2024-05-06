@@ -51,4 +51,4 @@ const commentEditValidation = {
     }
 }
 
-module.exports = { commentValidation , commentEditValidation }
+module.exports = { commentValidation, commentEditValidation }
