@@ -49,6 +49,7 @@ app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskC
 
 //comment crud operation
 app.post('/comment/create', authenticateUser, checkSchema(commentValidation), commentCtrl.create)
+app.get('/comment/get' , authenticateUser, commentCtrl.get)
 
 
 
