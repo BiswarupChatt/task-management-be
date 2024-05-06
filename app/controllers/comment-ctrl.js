@@ -27,10 +27,30 @@ commentCtrl.create = async (req, res) => {
 
 commentCtrl.get = async (req, res) => {
     handleValidationErrors(req, res)
-    const taskId = req.query.id
-    const comment = await Comment.findOne({"identifier.taskId" : taskId})
-    res.send(comment)
-    // console.log(comment)
+    try {
+        const taskId = req.query.id
+        const comment = await Comment.findOne({ "identifier.taskId": taskId })
+        res.status(200).json(comment)
+    } catch (err) {
+        res.status(500).json({ errors: 'Something went wrong' })
+    }
+}
+
+commentCtrl.edit = async (req, res) => {
+    handleValidationErrors(req, res)
+    try {
+        const body = req.body
+        const taskId = req.query.id
+        const task = await findOne({ "identifier.taskId": taskId })
+        if (task.identifier.userId.toString() == req.user.id.toString()) {
+            const comment = await Comment.findOneAndUpdate({ "identifier.taskId": taskId }, body, { new: true })
+            res.status(200).json(comment)
+        }else{
+            res.status(500).json({errors: "Something went wrong"})
+        }
+    } catch (err) {
+        res.status(500).json({ errors: 'Something went wrong' })
+    }
 }
 
 

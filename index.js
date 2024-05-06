@@ -53,9 +53,11 @@ app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskC
 
 //comment crud operation
 app.post('/comment/create', authenticateUser, checkSchema(commentValidation), commentCtrl.create)
+app.get('/comment/get', authenticateUser, commentCtrl.get)
+
 
 //timeLog crud operations
-app.post('/timeLog/create',checkSchema(timeLogValidation),timeCtrl.addTimeLog)
+// app.post('/timeLog/create',checkSchema(timeLogValidation),timeCtrl.addTimeLog)
 
 
 
