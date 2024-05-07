@@ -11,12 +11,15 @@ timeCtrl.addTimeLog = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   const { taskId, timeSpent } = req.body;
+  const userId = req.user.id;
 
   try {
-    const newTimeLog = new TimeLog({
-      task: taskId,
 
+    const newTimeLog = new TimeLog({
+      task: taskId, 
+      user:userId,   
       timeSpent,
+      
     });
     await newTimeLog.save();
     res.status(201).json(newTimeLog);
@@ -28,9 +31,10 @@ timeCtrl.addTimeLog = async (req, res) => {
 
 timeCtrl.getTimeLogsByTask = async (req, res) => {
   const taskId = req.params.taskId;
+  const userId = req.user.id
 
   try {
-    const timeLogs = await TimeLog.find({ task: taskId }).populate("user");
+    const timeLogs = await TimeLog.find({ task: taskId , user:userId})//.populate("user");
     res.status(200).json(timeLogs);
   } catch (err) {
     console.error("Error retrieving time logs");

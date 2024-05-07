@@ -14,7 +14,7 @@ const { taskValidations, taskStatusValidation } = require('./app/validations/tas
 
 const { commentValidation, commentEditValidation } = require('./app/validations/comment-validation')
 
-const  {timeLogValidations}  = require('./app/validations/timeLog-validations')
+const  {timeLogValidations,timeLogUpdateValidations}  = require('./app/validations/timeLog-validations')
  
 
 const authenticateUser = require('./app/middlewares/authenticateUser')
@@ -62,7 +62,7 @@ app.delete("/comment/delete", authenticateUser, commentCtrl.delete)
 //timeLog crud operations
 app.post('/timeLog/create',authenticateUser,checkSchema(timeLogValidations),timeCtrl.addTimeLog)
 app.get('/timeLog/tasks/:taskId',authenticateUser,timeCtrl.getTimeLogsByTask)
-app.put('/timelog/update',authenticateUser,checkSchema(timeLogValidations),timeCtrl.update)
+app.put('/timelog/update',authenticateUser,checkSchema(timeLogUpdateValidations),timeCtrl.update)
 app.delete('/timeLog/delete',authenticateUser,timeCtrl.delete)
 
 
