@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const {sendRegistrationEmail} = require("../utility/nodemailer")
+const _ = require("lodash")
 
 const userCtrl = {}
 
@@ -75,7 +76,7 @@ userCtrl.update = async (req, res) => {
     try {
         const body = req.body
         const user = await User.findByIdAndUpdate(req.user.id, body, { new: true })
-        return res.json(user)
+        return res.json(_.pick(user, ['firstName', 'lastName', 'email']))
     } catch (err) {
         res.status(500).json({ errors: 'Something went wrong' })
     }
@@ -88,7 +89,7 @@ userCtrl.delete = async (req, res) => {
     }
     try {
         const user = await User.findByIdAndDelete(req.user.id)
-        return res.json(user)
+        return res.json('User Deleted Successfully')
     } catch (err) {
         res.status(500).json({ errors: 'Something went wrong' })
     }

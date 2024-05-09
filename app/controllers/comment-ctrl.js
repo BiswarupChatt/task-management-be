@@ -13,7 +13,7 @@ commentCtrl.create = async (req, res) => {
         const body = req.body
         const comment = new Comment(body)
         comment.identifier.userId = req.user.id
-        comment.identifier.taskId = req.query.id
+        comment.identifier.taskId = req.query._id
         await comment.save()
         res.status(200).json(comment)
     } catch (err) {
@@ -66,9 +66,9 @@ commentCtrl.delete = async (req, res) => {
         const comment = await Comment.findById(commentId)
         if (comment.identifier.userId.toString() == req.user.id.toString()) {
             const comment = await Comment.findByIdAndDelete(commentId)
-            res.status(200).json(comment)
+            res.status(200).json("Comment Deleted Successfully")
         } else {
-            res.status(500).json({ errors: "Unauthorized to edit comment" })
+            res.status(500).json({ errors: "Unauthorized to delete the comment" })
         }
     } catch (err) {
         res.status(500).json({ errors: 'Something went wrong' })

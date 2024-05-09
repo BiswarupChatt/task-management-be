@@ -78,7 +78,7 @@ timeCtrl.delete = async (req, res) => {
         const timeLog = await TimeLog.findById(timeLogId)
         if (timeLog.user.toString() == req.user.id.toString()) {
             const timeLog = await TimeLog.findByIdAndDelete(timeLogId)
-            res.status(200).json(timeLog)
+            res.status(200).json("Time log deleted successfully")
         } else {
             res.status(500).json({ errors: "Unauthorized to delete timeLog" })
         }

@@ -3,7 +3,7 @@ const Task = require("../models/task-model")
 const User = require("../models/user-model")
 const nodemailer = require("../utility/nodemailer")
 const taskCtrl = {};
-
+const _ = require("lodash")
 
 //creating the tasks
 taskCtrl.create = async (req, res) => {
@@ -90,7 +90,7 @@ taskCtrl.statusUpdate = async (req, res) => {
 
     if (task.assignedUserId.toString() == userId.toString()) {
       const updatedTask = await Task.findByIdAndUpdate(taskId, { status: body.status }, { new: true })
-      res.status(200).json(updatedTask);
+      res.status(200).json(_.pick(updatedTask, ['status']));
     } else {
       res.status(403).json({ errors: "You are not authorized to update this task" })
     }
@@ -116,7 +116,7 @@ taskCtrl.delete = async (req, res) => {
       res.status(400).json({ errors: "Unauthorized to delete task" })
     } else {
       const deletedTask = await Task.findByIdAndDelete(taskId)
-      res.status(200).json(deletedTask)
+      res.status(200).json("Task Deleted Successfully")
     }
   } catch (err) {
     console.log(err)
