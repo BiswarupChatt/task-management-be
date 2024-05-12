@@ -1,10 +1,8 @@
 const User = require('../models/user-model')
 
 const passwordValidation = (value) => {
-    const upperCaseRegex = /[A-Z]/
-    const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/
-    const numberRegex = /[0-9]/
-    return upperCaseRegex.test(value) && specialCharRegex.test(value) && numberRegex.test(value)
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])(?=.*[0-9]).*$/
+    return passwordRegex.test(value);
 }
 
 const userRegisterValidation = {
