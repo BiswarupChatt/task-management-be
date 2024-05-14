@@ -31,6 +31,7 @@ userCtrl.register = async (req, res) => {
     }
 }
 
+
 userCtrl.login = async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
