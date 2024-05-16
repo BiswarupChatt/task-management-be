@@ -32,6 +32,7 @@ app.use(cors())
 //user crud operations
 app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.register)
 app.post('/users/login', checkSchema(userLoginValidations), userCtrl.login)
+app.get('/users', authenticateUser, userCtrl.allAccount)
 app.get('/users/account', authenticateUser, userCtrl.account)
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
