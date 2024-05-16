@@ -61,9 +61,19 @@ userCtrl.login = async (req, res) => {
 }
 
 
-userCtrl.allAccount = async (req, res) => {
+userCtrl.findAllAccount = async (req, res) => {
     try {
         const user = await User.find()
+        return res.json(user)
+    } catch (err) {
+        return res.status(500).json({ errors: 'Something went wrong' })
+    }
+}
+
+userCtrl.findAccount = async (req, res) => {
+    try {
+        const userId = req.params.id
+        const user = await User.findById(userId)
         return res.json(user)
     } catch (err) {
         return res.status(500).json({ errors: 'Something went wrong' })
