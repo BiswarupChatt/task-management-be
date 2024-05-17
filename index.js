@@ -33,10 +33,13 @@ app.use(cors())
 app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.register)
 app.post('/users/login', checkSchema(userLoginValidations), userCtrl.login)
 app.get('/users', authenticateUser, userCtrl.findAllAccount)
-app.get('/users/:id', authenticateUser, userCtrl.findAccount)
+
 app.get('/users/account', authenticateUser, userCtrl.account)
+
 app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
+app.get('/users/:id', authenticateUser, userCtrl.findAccount)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
+
 
 //tasks crud operations 
 app.post('/task/create', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.create)

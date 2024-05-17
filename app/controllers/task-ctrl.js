@@ -38,10 +38,10 @@ taskCtrl.getTasks = async (req, res) => {
   try {
     const userId = req.user.id
     if (req.user.role == 'Employee') {
-      const tasks = await Task.find({ assignedUserId: userId });
+      const tasks = await Task.find({ assignedUserId: userId }).populate('assignedUserId userId', 'firstName lastName email');
       res.status(200).json(tasks)
     } else if (req.user.role == 'TeamLead') {
-      const tasks = await Task.find({ userId: userId }); // userId is case sensitive 
+      const tasks = await Task.find({ userId: userId }).populate('assignedUserId userId', 'firstName lastName email')
       res.status(200).json(tasks)
     } else {
       res.status(400).json({ errors: "User not authorize to get task" })
