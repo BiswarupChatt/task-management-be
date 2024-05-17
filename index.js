@@ -30,22 +30,20 @@ app.use(morgan('common'))
 app.use(cors())
 
 //user crud operations
+app.get('/users', authenticateUser, userCtrl.findAllAccount)
 app.post('/users/register', checkSchema(userRegisterValidation), userCtrl.register)
 app.post('/users/login', checkSchema(userLoginValidations), userCtrl.login)
-app.get('/users', authenticateUser, userCtrl.findAllAccount)
-
 app.get('/users/account', authenticateUser, userCtrl.account)
-
-app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.get('/users/:id', authenticateUser, userCtrl.findAccount)
+app.put('/users/update', authenticateUser, checkSchema(userUpdateValidations), userCtrl.update)
 app.delete('/users/delete', authenticateUser, userCtrl.delete)
 
 
 //tasks crud operations 
-app.post('/task/create', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.create)
 app.get('/tasks', authenticateUser, taskCtrl.getTasks)
-app.put('/tasks/statusUpdate', authenticateUser, authorizeUser(["Employee"]), checkSchema(taskStatusValidation), taskCtrl.statusUpdate)
+app.post('/task/create', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.create)
 app.put('/tasks/update', authenticateUser, authorizeUser(["TeamLead"]), checkSchema(taskValidations), taskCtrl.update)
+app.put('/tasks/statusUpdate', authenticateUser, authorizeUser(["Employee"]), checkSchema(taskStatusValidation), taskCtrl.statusUpdate)
 app.delete('/tasks/delete', authenticateUser, authorizeUser(["TeamLead"]), taskCtrl.delete)
 
 //comment crud operation
